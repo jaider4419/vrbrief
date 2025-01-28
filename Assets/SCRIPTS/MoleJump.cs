@@ -71,4 +71,18 @@ public class MoleJump : MonoBehaviour
             popState = 1;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+       if (other.gameObject.tag == "hammer" && popState > 0)
+        {
+            popState = 0;
+            transform.position = startPos;
+            GameController.score += 10;
+
+        }
+
+    }
+
+    
 }

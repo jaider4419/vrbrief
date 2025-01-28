@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
 {
 
     public TextMeshProUGUI TimerText;
-    [SerializeField] float gameTimer;
+    [SerializeField] static float gameTimer;
 
     GameObject[] Moles;
     float popupTimer = 1;
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
         if (gameTimer == 0) 
         {
             TimerText.text = "GAME OVER!";
-            endMoleGame();
+            
         }
 
         updateMoles(); 
@@ -69,13 +69,5 @@ public class GameController : MonoBehaviour
            
         }
     }
-
-    void endMoleGame()
-    {
-        if (gameTimer == 0)
-        {
-            
-        }
-    }
-    
+  
 }
