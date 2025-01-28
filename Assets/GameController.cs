@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
 {
 
     public TextMeshProUGUI TimerText;
-    [SerializeField] static float gameTimer;
+    [SerializeField] float gameTimer;
 
     GameObject[] Moles;
     float popupTimer = 1;
