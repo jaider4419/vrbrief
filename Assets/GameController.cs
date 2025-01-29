@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
 {
 
     public TextMeshProUGUI TimerText;
-    static public float gameTimer = 30;
+    static public float gameTimer = 30f;
     GameObject[] Moles;
     float popupTimer = 1;
     static public int score = 0;
