@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.XR.OpenXR.Input;
+using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.Serialization;
+using UnityEngine.XR.Interaction.Toolkit.Attachment;
+using UnityEngine.XR.Interaction.Toolkit.Gaze;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
+using UnityEngine.XR.Interaction.Toolkit.Utilities;
+using UnityEngine.XR.Interaction.Toolkit.Utilities.Pooling;
+
 
 public class PickUp : MonoBehaviour
 {
@@ -26,9 +35,7 @@ public class PickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (hand == 'R')
-        {
-            if (OpenXRInput.)
-        }
+       
+
     }
 }

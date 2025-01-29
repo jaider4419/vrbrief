@@ -9,11 +9,11 @@ public class GameController : MonoBehaviour
 {
 
     public TextMeshProUGUI TimerText;
-    [SerializeField] float gameTimer;
-
+    static public float gameTimer = 30;
     GameObject[] Moles;
     float popupTimer = 1;
     static public int score = 0;
+    internal static bool RightHandInUse;
 
 
     // Start is called before the first frame update

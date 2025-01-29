@@ -55,7 +55,7 @@ public class MoleJump : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, startPos, 5 * Time.deltaTime);
 
-            if (Mathf.Abs(transform.position.y - startPos.y) < 0.1f)
+            if (Mathf.Abs(transform.position.y - startPos.y) < 0.1f) // // ????
             {
                 popState = 0;
                 transform.position = startPos;
@@ -82,6 +82,15 @@ public class MoleJump : MonoBehaviour
 
         }
 
+    }
+
+    public void gameoverMole()
+    {
+        if (GameController.gameTimer == 0f)
+        {
+            Debug.Log("GameEnded");
+            popState = 1; 
+        }
     }
 
     
