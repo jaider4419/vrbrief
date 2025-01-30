@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MoleJump : MonoBehaviour
 {
-
     public float visibleHeight = 0.2f;
     public float hiddenHeight = -0.3f;
     public float speed = 4f;
@@ -28,6 +27,7 @@ public class MoleJump : MonoBehaviour
     void Update()
     {
         disappearTimer -= Time.deltaTime;
+
         if (disappearTimer <= 0f)
         {
             Hide();
@@ -38,6 +38,7 @@ public class MoleJump : MonoBehaviour
 
     public void Rise()
     {
+        if (GameController.score < 0) return; 
         targetPosition = new Vector3(
             transform.localPosition.x,
             visibleHeight,

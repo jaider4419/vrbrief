@@ -1,20 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-
     public TextMeshProUGUI TimerText;
     public float gameTimer = 30f;
     GameObject[] Moles;
     float popupTimer = 1;
-    static public int score = 0;
+    public static int score = 0;
     internal static bool RightHandInUse;
-
+    private bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,38 +22,30 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameTimer > 0)
+        if (!gameOver)
         {
-            gameTimer -= Time.deltaTime;
+            if (gameTimer > 0)
+            {
+                gameTimer -= Time.deltaTime;
+
+                int minutes = Mathf.FloorToInt(gameTimer / 60);
+                int seconds = Mathf.FloorToInt(gameTimer % 60);
+                TimerText.text = string.Format("{00:00}:{01:00}", minutes, seconds);
+            }
+            else
+            {
+                gameOver = true; 
+                gameTimer = 0;
+                TimerText.text = "GAME OVER!";
+            }
+
+            updateMoles();
         }
-        if (gameTimer < 0)
-        {
-            gameTimer = 0;
-            
-            TimerText.text = "game over!";
-        }
-
-
-            
-
-        int minutes = Mathf.FloorToInt(gameTimer / 60);
-        int seconds = Mathf.FloorToInt(gameTimer % 60);
-
-        TimerText.text = string.Format("{00:00}:{01:00}", minutes, seconds);
-
-
-        if (gameTimer == 0) 
-        {
-            TimerText.text = "GAME OVER!";
-            SceneManager.LoadScene("Test");
-            
-        }
-
-        updateMoles(); 
     }
 
     void updateMoles()
     {
+        if (gameOver) return; 
 
         popupTimer -= Time.deltaTime;
 
@@ -64,11 +53,13 @@ public class GameController : MonoBehaviour
         {
             int rnd = Random.Range(0, Moles.Length);
             var script = Moles[rnd].GetComponent<MoleJump>();
-            script.Rise();
+
+            if (script != null)
+            {
+                script.Rise();
+            }
 
             popupTimer = Random.Range(1, 3);
-           
         }
     }
-  
 }
