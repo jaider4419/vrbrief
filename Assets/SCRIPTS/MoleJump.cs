@@ -1,97 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class MoleJump : MonoBehaviour
 {
 
-    [Header("Popup Settings")]
+    public float visibleHeight = 0.2f;
+    public float hiddenHeight = -0.3f;
+    public float speed = 4f;
+    public float disappearDuration = 0.5f;
 
-    [SerializeField] float popHeight = 1;
-    Vector3 startPos;
-    Vector3 popPos;
+    private Vector3 targetPosition;
+    private float disappearTimer = 0f;
 
-    [Header("Popup Settings")]
-
-    [SerializeField] int popState = 0;
-    [SerializeField] float waitTime = 1;
-
-    private 
-
-
-
-    // Start is called before the first frame update
-    void Start()
+    // Use this for initialization
+    void Awake()
     {
-        startPos = transform.position;
-        popPos = transform.position;
-        popPos.y += popHeight;
+        targetPosition = new Vector3(
+            transform.localPosition.x,
+            hiddenHeight,
+            transform.localPosition.z
+        );
+
+        transform.localPosition = targetPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (popState == 1)
+        disappearTimer -= Time.deltaTime;
+        if (disappearTimer <= 0f)
         {
-            transform.position = Vector3.Lerp(transform.position, popPos, 5 * Time.deltaTime);
-            if (Mathf.Abs(transform.position.y - popPos.y) < 0.1f)
-            {
-                popState = 2;
-                waitTime = Random.Range(0.5f, 2);
-            }
+            Hide();
         }
 
-        if (popState == 2)
-        {
-            waitTime -= Time.deltaTime;
-            if (waitTime < 0)
-            {
-                popState = 3;
-            }
-        }
-
-        if (popState == 3)
-// where the mole will go?
-        {
-            transform.position = Vector3.Lerp(transform.position, startPos, 5 * Time.deltaTime);
-
-            if (Mathf.Abs(transform.position.y - startPos.y) < 0.1f) // // ????
-            {
-                popState = 0;
-                transform.position = startPos;
-            }
-        }
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * speed);
     }
 
-    public void pop()
+    public void Rise()
     {
-        if (popState == 0)
-        {
-            popPos.y += popHeight;
-            popState = 1;
-        }
+        targetPosition = new Vector3(
+            transform.localPosition.x,
+            visibleHeight,
+            transform.localPosition.z
+        );
+
+        disappearTimer = disappearDuration;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Hide()
     {
-       if (other.gameObject.tag == "hammer" && popState > 0)
-        {
-            popState = 0;
-            transform.position = startPos;
-            GameController.score += 10;
-
-        }
-
+        targetPosition = new Vector3(
+            transform.localPosition.x,
+            hiddenHeight,
+            transform.localPosition.z
+        );
     }
 
-    public void gameoverMole()
+    public void OnHit()
     {
-        if (GameController.gameTimer == 0f)
-        {
-            Debug.Log("GameEnded");
-            popState = 1; 
-        }
+        Hide();
     }
-
-    
 }

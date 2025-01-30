@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
 {
 
     public TextMeshProUGUI TimerText;
-    static public float gameTimer = 30f;
+    public float gameTimer = 30f;
     GameObject[] Moles;
     float popupTimer = 1;
     static public int score = 0;
@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
         if (gameTimer == 0) 
         {
             TimerText.text = "GAME OVER!";
+            SceneManager.LoadScene("Test");
             
         }
 
@@ -63,7 +64,7 @@ public class GameController : MonoBehaviour
         {
             int rnd = Random.Range(0, Moles.Length);
             var script = Moles[rnd].GetComponent<MoleJump>();
-            script.pop();
+            script.Rise();
 
             popupTimer = Random.Range(1, 3);
            
