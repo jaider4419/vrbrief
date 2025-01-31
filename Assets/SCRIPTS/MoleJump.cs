@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class MoleJump : MonoBehaviour
 {
@@ -60,5 +62,16 @@ public class MoleJump : MonoBehaviour
     public void OnHit()
     {
         Hide();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+       if (other.CompareTag("hammer"))
+        {
+            Debug.Log("mole hit !!!");
+            OnHit();
+
+            
+        }
     }
 }
