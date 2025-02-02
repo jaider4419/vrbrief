@@ -1,20 +1,18 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class MoleJump : MonoBehaviour
 {
     public float visibleHeight = 0.2f;
     public float hiddenHeight = -0.3f;
     public float speed = 4f;
-    public float disappearDuration = 0.5f;
+    public float disappearDuration = 2f;
 
     private Vector3 targetPosition;
-    private float disappearTimer = 0f;
+    private bool isVisible = false;
+    private bool isMoving = false; 
 
-    // Use this for initialization
-    void Awake()
+    private void Awake()
     {
         targetPosition = new Vector3(
             transform.localPosition.x,
@@ -25,29 +23,39 @@ public class MoleJump : MonoBehaviour
         transform.localPosition = targetPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        disappearTimer -= Time.deltaTime;
-
-        if (disappearTimer <= 0f)
-        {
-            Hide();
-        }
-
         transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * speed);
+
+        if (isMoving && Vector3.Distance(transform.localPosition, targetPosition) < 0.01f)
+        {
+            isMoving = false; 
+
+            if (isVisible)
+            {
+                StartCoroutine(StayUpThenHide());
+            }
+        }
     }
 
     public void Rise()
     {
-        if (GameController.score < 0) return; 
+        if (GameController.score < 0 || isVisible) return;
+
         targetPosition = new Vector3(
             transform.localPosition.x,
             visibleHeight,
             transform.localPosition.z
         );
 
-        disappearTimer = disappearDuration;
+        isVisible = true;
+        isMoving = true;
+    }
+
+    private IEnumerator StayUpThenHide()
+    {
+        yield return new WaitForSeconds(disappearDuration);
+        Hide();
     }
 
     public void Hide()
@@ -57,21 +65,30 @@ public class MoleJump : MonoBehaviour
             hiddenHeight,
             transform.localPosition.z
         );
+
+        isVisible = false;
+        isMoving = true;
     }
 
     public void OnHit()
     {
+        StopAllCoroutines();
         Hide();
+        StartCoroutine(RespawnAfterDelay(1.5f));
+    }
+
+    private IEnumerator RespawnAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Rise();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-       if (other.CompareTag("hammer"))
+        if (other.CompareTag("hammer"))
         {
-            Debug.Log("mole hit !!!");
+            Debug.Log($"Mole hit by {other.name}!");
             OnHit();
-
-            
         }
     }
 }
