@@ -12,7 +12,8 @@ public class MoleJump : MonoBehaviour
     public TextMeshProUGUI scoreShow;
     private Vector3 targetPosition;
     private bool isVisible = false;
-    private bool isMoving = false; 
+    private bool isMoving = false;
+    public AudioSource MoleGrunt;
 
     private void Awake()
     {
@@ -74,6 +75,7 @@ public class MoleJump : MonoBehaviour
 
     public void OnHit()
     {
+        MoleGrunt.Play();
         score++;
         scoreShow.text = "Score:" + score;
         StopAllCoroutines();

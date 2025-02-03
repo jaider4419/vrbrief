@@ -18,7 +18,6 @@ public class Hammer : MonoBehaviour
             if (mole != null)
             {
                 mole.OnHit();
-                GameController.score += 1;
                 HapticFeedback();
             }
         }
