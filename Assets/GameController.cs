@@ -9,7 +9,6 @@ public class GameController : MonoBehaviour
     public float gameTimer = 30f;
     GameObject[] Moles;
     float popupTimer = 1;
-    public static int score = 0;
     internal static bool RightHandInUse;
     private bool gameOver = false;
 

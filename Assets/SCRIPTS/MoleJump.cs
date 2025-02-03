@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class MoleJump : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class MoleJump : MonoBehaviour
     public float hiddenHeight = -0.3f;
     public float speed = 4f;
     public float disappearDuration = 2f;
-
+    public int score = 0;
+    public TextMeshProUGUI scoreShow;
     private Vector3 targetPosition;
     private bool isVisible = false;
     private bool isMoving = false; 
@@ -40,7 +42,7 @@ public class MoleJump : MonoBehaviour
 
     public void Rise()
     {
-        if (GameController.score < 0 || isVisible) return;
+        if (score < 0 || isVisible) return;
 
         targetPosition = new Vector3(
             transform.localPosition.x,
@@ -72,6 +74,8 @@ public class MoleJump : MonoBehaviour
 
     public void OnHit()
     {
+        score++;
+        scoreShow.text = "Score:" + score;
         StopAllCoroutines();
         Hide();
         StartCoroutine(RespawnAfterDelay(1.5f));
