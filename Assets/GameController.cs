@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                gameOver = true; 
+                gameOver = true;
                 gameTimer = 0;
                 TimerText.text = "GAME OVER!";
             }
@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
 
     void updateMoles()
     {
-        if (gameOver) return; 
+        if (gameOver) return;
 
         popupTimer -= Time.deltaTime;
 
@@ -61,4 +61,5 @@ public class GameController : MonoBehaviour
             popupTimer = Random.Range(1, 3);
         }
     }
+
 }
